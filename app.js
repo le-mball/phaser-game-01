@@ -10,6 +10,11 @@ var users = require('./routes/users');
 
 var app = express();
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var fs = require('fs');
+server.listen(3001);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -56,5 +61,12 @@ app.use(function(err, req, res, next) {
   });
 });
 
+io.on('connection', function(socket) {
+  console.log('web socket connection opened: ' + socket.id);
+  socket.emit("welcome", {hello:"world"});
+  socket.on("move", function(data) {
+    console.log(data);
+  });  
+});
 
 module.exports = app;
