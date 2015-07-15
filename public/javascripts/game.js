@@ -10,8 +10,10 @@
 	}
 	
 	function create() {
-		player = game.add.sprite(0, 0, 'star');		
+		player = game.add.sprite(0, 0, 'star');
+		game.physics.startSystem(Phaser.Physics.ARCADE);				
 		game.physics.arcade.enable(player);		
+		player.body.collideWorldBounds = true;
 		cursors = game.input.keyboard.createCursorKeys();
 	}
 	
